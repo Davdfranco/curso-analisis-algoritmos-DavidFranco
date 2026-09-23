@@ -19,3 +19,4 @@ cd curso-analisis-algoritmos-DavidFranco
 ## Autor
 - Nombre: David Stiven Franco Lopez
 - Correo: davidfranco259514@correo.itm.edu.co
+- Semestre: 8vo semestre - 2026-2

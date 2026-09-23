@@ -12,7 +12,7 @@ Repositorio del curso Analisis de Algoritmos (ITM), usado durante todo el semest
 Clonar el repositorio y entrar a la carpeta correspondiente:
 
 ```bash
-git clone <url-del-repo>
+git clone https://github.com/Davdfranco/curso-analisis-algoritmos-DavidFranco.git
 cd curso-analisis-algoritmos-DavidFranco
 ```
 

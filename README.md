@@ -15,3 +15,7 @@ Clonar el repositorio y entrar a la carpeta correspondiente:
 git clone <url-del-repo>
 cd curso-analisis-algoritmos-DavidFranco
 ```
+
+## Autor
+- Nombre: David Stiven Franco Lopez
+- Correo: davidfranco259514@correo.itm.edu.co

@@ -7,7 +7,7 @@ Este directorio contiene los ejercicios del Laboratorio 02: refactorizacion con 
 El entorno virtual se crea y se activa desde la **raiz del repositorio** (no desde esta carpeta), con:
 
 ```bash
-python3 -m venv venv
+python -m venv venv
 source venv/Scripts/activate   # Windows (Git Bash)
 ```
 
@@ -23,7 +23,7 @@ pip freeze > requirements.txt
 Otra persona puede reproducir exactamente este entorno ejecutando, desde la raiz del repositorio:
 
 ```bash
-python3 -m venv venv
+python -m venv venv
 source venv/Scripts/activate
 pip install -r requirements.txt
 ```

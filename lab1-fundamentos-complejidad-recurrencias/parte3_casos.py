@@ -2,6 +2,7 @@
 
 import statistics
 import time
+from typing import Callable
 
 import matplotlib.pyplot as plt
 
@@ -18,7 +19,7 @@ ESCENARIOS = {
 }
 
 
-def medir(generador, n: int) -> tuple[float, int]:
+def medir(generador: Callable[[int], list[int]], n: int) -> tuple[float, int]:
     """Mide el tiempo mediano y las comparaciones de insertion_sort.
 
     Genera el lote una sola vez y ejecuta insertion_sort varias veces
@@ -65,7 +66,7 @@ def main() -> None:
         plt.plot(TAMANIOS, resultados[nombre]["comparaciones"], marker="o", label=nombre)
     plt.title("Insertion sort: comparaciones vs. tamaño de entrada")
     plt.xlabel("Tamaño de entrada (n)")
-    plt.ylabel("Número de comparaciones")
+    plt.ylabel("Número de comparaciones (Unidades)")
     plt.legend()
     plt.grid(True, alpha=0.3)
     plt.tight_layout()

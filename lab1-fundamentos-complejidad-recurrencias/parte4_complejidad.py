@@ -2,6 +2,7 @@
 
 import statistics
 import time
+from typing import Callable
 
 import matplotlib.pyplot as plt
 
@@ -17,7 +18,7 @@ ALGORITMOS = {
 }
 
 
-def medir(algoritmo, lote: list[int]) -> float:
+def medir(algoritmo: Callable[[list[int]], tuple[list[int], int]], lote: list[int]) -> float:
     """Mide el tiempo mediano de ejecucion de un algoritmo sobre un lote.
 
     El tiempo de generacion de datos no se cronometra: el lote ya

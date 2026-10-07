@@ -8,8 +8,16 @@
 
 Desde la raiz del repositorio, con el entorno virtual activado:
 
+En Windows (Git Bash):
 ```bash
 source venv/Scripts/activate
+pip install -r requirements.txt
+cd lab1-fundamentos-complejidad-recurrencias
+```
+
+En macOS/Linux:
+```bash
+source venv/bin/activate
 pip install -r requirements.txt
 cd lab1-fundamentos-complejidad-recurrencias
 ```
@@ -26,7 +34,7 @@ Para correr el experimento de la Parte 4:
 python parte4_complejidad.py
 ```
 
-Ambos scripts generan las graficas correspondientes en la carpeta `graficas/`.
+Ambos scripts generan las graficas correspondientes en la carpeta `graficas/`. Cada tiempo reportado es la **mediana de 3 repeticiones** sobre el mismo lote de datos, para reducir el ruido de mediciones individuales (ver funcion `medir` en `parte3_casos.py` y `parte4_complejidad.py`).
 
 **Nota sobre el sentido de ordenamiento:** en este laboratorio, `insertion_sort` y `merge_sort` ordenan de menor a mayor. Esta eleccion no cambia ninguna complejidad calculada; solo determina que el escenario B (casi ordenado) queda ascendente y el escenario C (orden inverso) queda descendente.
 
@@ -40,7 +48,7 @@ Como vemos la plataforma Tamiza lleva ocho años dando el resultado correcto. Ca
 
 Duplicar la velocidad del servidor podría ayudar por un tiempo, pero no solucionaría el problema principal. Esto se debe a que insertion sort tiene un crecimiento cuadrático (O(n²)) en el peor caso. Por ejemplo, si la cantidad de datos se duplica, el tiempo de ejecución puede aumentar aproximadamente cuatro veces. El programa pasó de trabajar con 4 municipios y 20.000 registros a trabajar con todo el departamento y 1.200.000 registros. Este aumento es demasiado grande para depender solamente de mejoras en el hardware. Aunque un procesador más rápido pueda reducir el tiempo actualmente, si los datos siguen creciendo, el problema volverá a aparecer. Por eso considero que sería una solución temporal y no una solución al problema de fondo.
 
-Algo parecido podría pasar en un sistema de dashboards de seguridad en el que he trabajado (Florida parque comercial). Por ejemplo, si una función tuviera que comparar todos los eventos de seguridad con todos los turnos de vigilancia registrados durante un mes, podría funcionar bien cuando existen pocos cientos de eventos. Sin embargo, si el centro comercial empieza a generar miles de eventos diarios y el reporte necesita aparecer en pocos segundos en un dashboard en tiempo real, ese mismo proceso podría volverse demasiado lento. Los datos seguirían siendo procesados correctamente, pero ya no se cumpliría con el tiempo de respuesta que necesita el sistema. En ese caso, al igual que con Tamiza, el problema no sería que el resultado estuviera mal, sino que el algoritmo utilizado no sería adecuado para la cantidad de datos y el tiempo disponible.
+Algo parecido podría pasar en un sistema de dashboards de seguridad en el que he trabajado (Florida Parque Comercial). Por ejemplo, si una función tuviera que cruzar todos los eventos de seguridad del mes contra todos los turnos de vigilancia registrados (una comparación de cada evento contra cada turno), con unos 200 eventos y 150 turnos eso son apenas 30.000 comparaciones, que se resuelven en milisegundos. Pero si el centro comercial crece y empieza a generar unos 5.000 eventos diarios cruzados contra unos 300 turnos, ese mismo cruce ya implica 1.500.000 comparaciones, y si el dashboard necesita refrescar ese reporte cada 5 segundos para mostrarlo en tiempo real, el proceso ya no alcanzaría a completarse dentro de esa ventana. Los datos seguirían siendo procesados correctamente, pero ya no se cumpliría con el tiempo de respuesta que necesita el sistema. En ese caso, al igual que con Tamiza, el problema no sería que el resultado estuviera mal, sino que el algoritmo utilizado no sería adecuado para la cantidad de datos y el tiempo disponible.
 
 ---
 
@@ -48,11 +56,11 @@ Algo parecido podría pasar en un sistema de dashboards de seguridad en el que h
 
 ### Responsabilidad ambiental y ética de la implementación
 
-**Dimensión medioambiental:** Tamiza, funciona noche tras noche, y el proceso de ordenamiento tiene lugar cada mañana en tiempo real. Por ende, el consumo energético del algoritmo (como dijo el profesor en clase, como ingenieros concientizados que somos) es otro factor a tener en cuenta. entonces, debemos preocuparnos por la diferencia en el consumo energético entre el ordenamiento por inserción y un algoritmo más eficiente. Insertion sort presenta una complejidad de O(n²), lo que significa que, a medida que aumenta el tamaño de la matriz, el tiempo necesario para ordenarla aumenta exponencialmente. Es posible que el algoritmo concreto utilizado para ordenar las 1.2 millones de matrices no sea decisivo; sin embargo, dado que este proceso se lleva a cabo todos los días y que el coste energético de ordenar una única matriz se multiplica por cada día del año, la diferencia entre un algoritmo de O(n log n) y uno de O(n²) podría tener repercusiones medioambientales significativas.
+**Dimensión medioambiental:** Tamiza, funciona noche tras noche, y el proceso de ordenamiento tiene lugar cada mañana en tiempo real. Por ende, el consumo energético del algoritmo (como dijo el profesor en clase, como ingenieros concientizados que somos) es otro factor a tener en cuenta. entonces, debemos preocuparnos por la diferencia en el consumo energético entre el ordenamiento por inserción y un algoritmo más eficiente. Insertion sort presenta una complejidad de O(n²), lo que significa que, a medida que aumenta el tamaño de la matriz, el tiempo necesario para ordenarla aumenta de forma **cuadrática, no exponencial** (si el tamaño de los datos se duplica, el tiempo se multiplica aproximadamente por cuatro, no por una potencia creciente de dos). Es posible que el algoritmo concreto utilizado para ordenar las 1.2 millones de matrices no sea decisivo; sin embargo, dado que este proceso se lleva a cabo todos los días y que el coste energético de ordenar una única matriz se multiplica por cada día del año, la diferencia entre un algoritmo de O(n log n) y uno de O(n²) podría tener repercusiones medioambientales significativas.
 
-**Dimensión ética:** El aumento del tiempo necesario para completar el proceso de ordenamiento podría tener varias consecuencias. En primer lugar, un paciente con un índice de riesgo alto podría tener que esperar a una intervención quirúrgica más que si la lista hubiera sido ordenada a tiempo. El fraude puede ser consecuencia del hecho de que la lista no estuviera ordenada antes de la hora límite de las 6:00, si bien es claro que sería el paciente quien asumiría el coste del error, no la secretaría ni el equipo de desarrollo del sistema. La segunda consideración ética se refiere al operador del centro de atención al cliente. Si recibe una lista desordenada o incompleta, podría empezar a llamar a los pacientes que ocupan anteriormente en la lista aunque aún no hayan sido evaluados, argumentando que están priorizados.
+**Dimensión ética:** El aumento del tiempo necesario para completar el proceso de ordenamiento podría tener varias consecuencias. En primer lugar, un paciente con un índice de riesgo alto podría tener que esperar a una intervención quirúrgica más que si la lista hubiera sido ordenada a tiempo. El fraude puede ser consecuencia del hecho de que la lista no estuviera ordenada antes de la hora límite de las 6:00, si bien es claro que sería el paciente quien asumiría el coste del error, no la secretaría ni el equipo de desarrollo del sistema. La segunda consideración ética se refiere al operador del centro de atención al cliente. Si recibe una lista desordenada o incompleta, podría empezar a llamar a pacientes que no son realmente los de mayor riesgo, actuando de buena fe sobre información que no refleja la prioridad real. Aquí el costo del error lo terminan asumiendo dos partes a la vez: el operador, que queda en una posición de responsabilidad sin tener cómo saber que la lista estaba mal, y el paciente de alto riesgo que debería haber sido contactado primero y no lo fue.
 
-**Tensión entre orden y corrección:** El problema de ordenar una lista de pacientes con base en sus índices de riesgo presenta una tensión entre el orden y la corrección. El orden de la lista afecta a las prioridades de los médicos, puesto que los pacientes listados primero tienen una prioridad más alta y serán atendidos primero; por lo tanto, debe encontrarse un equilibrio entre la velocidad a la que se ordena la lista y la exactitud del resultado. El sistema tiene cuatro horas para completar el proceso de ordenamiento antes de que se cierre el servicio, y no debe invertir más tiempo del necesario en intentar mejorar el orden de la lista.
+**Tensión entre orden y corrección:** El problema de ordenar una lista de pacientes con base en sus índices de riesgo presenta una tensión entre el orden y la corrección. El orden de la lista no es un detalle secundario: decide literalmente a qué paciente se llama primero, y en salud eso puede significar la diferencia entre una intervención oportuna y una tardía. Esto no se resuelve buscando un punto medio entre velocidad y exactitud, sino reconociendo que la corrección del orden nunca puede sacrificarse por velocidad: el algoritmo debe ser siempre exacto, dentro de la ventana de cuatro horas, no "exacto cuando el tiempo alcanza". Un algoritmo rápido pero que prioriza mal a los pacientes sería, en este contexto, más peligroso que uno lento pero preciso.
 
 ---
 
@@ -140,9 +148,15 @@ for i in range(1, len(lista)):        # se ejecuta n-1 veces
 
 Sea `t_i` el número de veces que se ejecuta el `while` interno en la iteración `i`-ésima del `for` externo (equivalente a cuántas posiciones se desplaza el elemento `actual`).
 
--   **Mejor caso** (lista ya ordenada): cada elemento nuevo se compara una sola vez y no se desplaza, así que `t_i = 1` para todo `i`. El costo total es `Σ(i=1 hasta n-1) O(1) = O(n)`. **Insertion sort es O(n) en el mejor caso.**
+-   **Mejor caso** (lista ya ordenada): cada elemento nuevo se compara una sola vez contra su vecino inmediato y no se desplaza, así que `t_i = 1` para todo `i`. El costo del `while` es `Σ(i=1 hasta n-1) 1 = n-1`: es decir, se realizan **exactamente n-1 comparaciones** en total (una por cada uno de los n-1 elementos insertados), sin ninguna aproximación. Sumando el costo O(n) de las líneas fijas del `for`, el total es **O(n)**.
 -   **Peor caso** (lista en orden inverso): cada elemento nuevo debe desplazarse hasta el principio, así que `t_i = i`. El costo total es `Σ(i=1 hasta n-1) i = (n-1)n/2 = O(n²)`. **Insertion sort es O(n²) en el peor caso.**
--   **Caso promedio**: en promedio, cada elemento se desplaza aproximadamente la mitad de su posición, así que `t_i ≈ i/2`. La suma sigue siendo del orden de `n²/4`, que asintóticamente es **O(n²)**.
+-   **Caso promedio**: para una entrada aleatoria, el elemento que se inserta en la posición `i` tiene, en promedio, la misma probabilidad de terminar en cualquiera de las `i` posiciones posibles (de la 0 a la i-1), por lo que el número esperado de comparaciones en esa iteración es `t_i ≈ i/2`. Sumando sobre todas las iteraciones:
+
+    ```
+    Σ(i=1 hasta n-1) i/2 = (1/2) · Σ(i=1 hasta n-1) i = (1/2) · (n-1)n/2 = n(n-1)/4
+    ```
+
+    Esta suma, `n(n-1)/4`, es del orden de `n²/4`, que asintóticamente (ignorando la constante 1/4) es **O(n²)**. Es decir, el caso promedio tiene el mismo orden de crecimiento que el peor caso, solo que con una constante menor (1/4 en vez de 1/2), lo cual es consistente con que insertion sort no mejora su orden de complejidad fuera de entradas ya casi ordenadas.
 
 **Tabla de complejidades**
 
